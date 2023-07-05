@@ -13,10 +13,17 @@ public class PickCollectable : MonoBehaviour
     [SerializeField] private GameObject _gameOverParticle;
     [SerializeField] private CinemachineVirtualCamera _gameOverCamera;
     [SerializeField] private Material _grey;
+    [SerializeField] private int _playerThousDigit;
     [SerializeField] private int _playerFirstDigit;
     [SerializeField] private int _playerSecondDigit;
     [SerializeField] private int _playerThirdDigit;
-  
+
+    public int PlayerThousDigit
+    {
+        get { return _playerThousDigit; }
+        set { _playerThousDigit = value; }
+    }
+
     public int PlayerFirstDigit
     {
         get { return _playerFirstDigit; }
@@ -35,7 +42,7 @@ public class PickCollectable : MonoBehaviour
     private void Start()
     {
         _playerThirdDigit = _saveDatas.StartCount;
-        transform.GetChild(2).GetComponent<MeshFilter>().mesh = _numberMeshes[_playerThirdDigit].GetComponent<MeshFilter>().mesh;
+        transform.GetChild(3).GetComponent<MeshFilter>().mesh = _numberMeshes[_playerThirdDigit].GetComponent<MeshFilter>().mesh;
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -45,6 +52,7 @@ public class PickCollectable : MonoBehaviour
             int first = _playerFirstDigit;
             int second = _playerSecondDigit;
             int third = _playerThirdDigit;
+            int thous = _playerThousDigit;
 
             if (other.GetComponent<CollectableManager>().State=="Positive")//pozitif powerup toplama islemleri
             {
@@ -55,7 +63,7 @@ public class PickCollectable : MonoBehaviour
                     _surplus = 1;
                 }
 
-                _playerSecondDigit = _playerSecondDigit + other.GetComponent<CollectableManager>().SecondDigit + _surplus;
+                _playerSecondDigit += other.GetComponent<CollectableManager>().SecondDigit + _surplus;
                 _surplus = 0;
                 if (_playerSecondDigit >= 10)
                 {
@@ -63,11 +71,19 @@ public class PickCollectable : MonoBehaviour
                     _surplus = 1;
                 }
 
-                _playerFirstDigit = _playerFirstDigit + other.GetComponent<CollectableManager>().FirstDigit + _surplus;
+                _playerFirstDigit += other.GetComponent<CollectableManager>().FirstDigit + _surplus;
                 _surplus = 0;
                 if (_playerFirstDigit >= 10)
                 {
                     _playerFirstDigit = _playerFirstDigit % 10;
+                    _surplus = 1;
+                }
+
+                _playerThousDigit += _surplus;
+                _surplus = 0;
+                if (_playerThousDigit >= 10)
+                {
+                    _playerThousDigit = 9;
                 }
 
                 transform.GetComponent<Animator>().enabled = false;
@@ -80,7 +96,8 @@ public class PickCollectable : MonoBehaviour
 
                 MeshRendererActiveOrDeactive();
             }
-            else if(other.GetComponent<CollectableManager>().State == "Negative")//negaitf powerup cэkarma islemleri
+            else if(other.GetComponent<CollectableManager>().State == "Negative" && _playerThousDigit == 0)
+                // Негативные теперь работают только когда меньше тысячи
             {
                 if (_playerThirdDigit < other.GetComponent<CollectableManager>().ThirdDigit)
                 {
@@ -135,39 +152,28 @@ public class PickCollectable : MonoBehaviour
     }
     void MeshChange()
     {
-        transform.GetChild(0).GetComponent<MeshFilter>().mesh = _numberMeshes[_playerFirstDigit].GetComponent<MeshFilter>().mesh;//bu 3 satir mesh degisimi icin
-        transform.GetChild(1).GetComponent<MeshFilter>().mesh = _numberMeshes[_playerSecondDigit].GetComponent<MeshFilter>().mesh;
-        transform.GetChild(2).GetComponent<MeshFilter>().mesh = _numberMeshes[_playerThirdDigit].GetComponent<MeshFilter>().mesh;
+        transform.GetChild(0).GetComponent<MeshFilter>().mesh = _numberMeshes[_playerThousDigit].GetComponent<MeshFilter>().mesh;
+        transform.GetChild(1).GetComponent<MeshFilter>().mesh = _numberMeshes[_playerFirstDigit].GetComponent<MeshFilter>().mesh;//bu 3 satir mesh degisimi icin
+        transform.GetChild(2).GetComponent<MeshFilter>().mesh = _numberMeshes[_playerSecondDigit].GetComponent<MeshFilter>().mesh;
+        transform.GetChild(3).GetComponent<MeshFilter>().mesh = _numberMeshes[_playerThirdDigit].GetComponent<MeshFilter>().mesh;
     }
+
     void MeshRendererActiveOrDeactive()
     {
-        if (_playerFirstDigit != 0)//bu uclu 0 olanlarэn meshini kapar, olmayanlarэn acar
+        var disableThous = _playerThousDigit == 0;
+        var disableHundred = disableThous && _playerFirstDigit == 0;
+        var disableTens = disableHundred && _playerSecondDigit == 0;
+        var activationArray = new bool[]
         {
-            transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
-            transform.GetChild(1).GetComponent<MeshRenderer>().enabled = true;
-            transform.GetChild(2).GetComponent<MeshRenderer>().enabled = true;
-            transform.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = true;
-            transform.GetChild(1).gameObject.GetComponent<BoxCollider>().enabled = true;
-            transform.GetChild(2).gameObject.GetComponent<BoxCollider>().enabled = true;
-        }
-        else if (_playerFirstDigit == 0 && _playerSecondDigit == 0)
+            !disableThous, !disableHundred, !disableTens
+        };
+
+        for (var i = 0; i < 3; i++)
         {
-            transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
-            transform.GetChild(1).GetComponent<MeshRenderer>().enabled = false;
-            transform.GetChild(2).GetComponent<MeshRenderer>().enabled = true;
-            transform.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = false;
-            transform.GetChild(1).gameObject.GetComponent<BoxCollider>().enabled = false;
-            transform.GetChild(2).gameObject.GetComponent<BoxCollider>().enabled = true;
+            transform.GetChild(i).GetComponent<MeshRenderer>().enabled = activationArray[i];
+            transform.GetChild(i).gameObject.GetComponent<BoxCollider>().enabled = activationArray[i];
         }
-        else if (_playerFirstDigit == 0)
-        {
-            transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
-            transform.GetChild(1).GetComponent<MeshRenderer>().enabled = true;
-            transform.GetChild(2).GetComponent<MeshRenderer>().enabled = true;
-            transform.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = false;
-            transform.GetChild(1).gameObject.GetComponent<BoxCollider>().enabled = true;
-            transform.GetChild(2).gameObject.GetComponent<BoxCollider>().enabled = true;
-        }
+
     }
 
     void AutomaticDecrease()
@@ -186,22 +192,34 @@ public class PickCollectable : MonoBehaviour
 
         if (_playerFirstDigit==0 && _playerSecondDigit==0 && _playerThirdDigit==0)
         {
-            transform.GetChild(2).GetComponent<MeshFilter>().sharedMesh = _numberMeshes[0].GetComponent<MeshFilter>().sharedMesh;
-            _gameOverCamera.Priority = 15;
-            _playerCont._isFinish = true;
-            _gameOverParticle.SetActive(true);
-            for (int i = 0; i < 4; i++)
+            if (_playerThousDigit > 0)
             {
-                transform.GetChild(i).GetComponent<MeshRenderer>().sharedMaterial = _grey;
-                transform.GetChild(i).GetComponent<Animator>().enabled = false;
+                _playerThousDigit--;
+                _playerThirdDigit = 9;
+                _playerSecondDigit = 9;
+                _playerFirstDigit = 9;
+                MeshChange();
+                MeshRendererActiveOrDeactive();
             }
-            transform.DOMove(transform.position - new Vector3(0f, .17f, .5f), .75f);
-            transform.DORotate(new Vector3(-90f, 0f, 0f), .75f).OnComplete(() =>
+            else
             {
-                _uiManager._earnedMoneyText.text = _saveDatas.EarnedMoney.ToString() + "$";
-                _uiManager._finishPanel.SetActive(true);
-            });
-            CancelInvoke();
+                transform.GetChild(3).GetComponent<MeshFilter>().sharedMesh = _numberMeshes[0].GetComponent<MeshFilter>().sharedMesh;
+                _gameOverCamera.Priority = 15;
+                _playerCont._isFinish = true;
+                _gameOverParticle.SetActive(true);
+                for (int i = 0; i < 5; i++)
+                {
+                    transform.GetChild(i).GetComponent<MeshRenderer>().sharedMaterial = _grey;
+                    transform.GetChild(i).GetComponent<Animator>().enabled = false;
+                }
+                transform.DOMove(transform.position - new Vector3(0f, .17f, .5f), .75f);
+                transform.DORotate(new Vector3(-90f, 0f, 0f), .75f).OnComplete(() =>
+                {
+                    _uiManager._earnedMoneyText.text = _saveDatas.EarnedMoney.ToString() + "$";
+                    _uiManager._finishPanel.SetActive(true);
+                });
+                CancelInvoke();
+            }
         }
         else
         {
