@@ -61,7 +61,27 @@ public class PlayerController : MonoBehaviour
     }
     public void CheckFirstDigitZeroOrNot()
     {
-        if (_pickCollectableScript.PlayerFirstDigit == 0 && _pickCollectableScript.PlayerSecondDigit == 0)
+        if (_pickCollectableScript.PlayerFirstDigit == 0 && _pickCollectableScript.PlayerSecondDigit == 0 && _pickCollectableScript.PlayerThirdDigit == 0 && _pickCollectableScript.PlayerFourthDigit == 0)
+        {
+            transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().enabled = false;
+            transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().enabled = false;
+            transform.GetChild(2).gameObject.GetComponent<MeshRenderer>().enabled = false;
+            transform.GetChild(3).gameObject.GetComponent<MeshRenderer>().enabled = false;
+            transform.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = false;
+            transform.GetChild(1).gameObject.GetComponent<BoxCollider>().enabled = false;
+            transform.GetChild(2).gameObject.GetComponent<BoxCollider>().enabled = false;
+            transform.GetChild(3).gameObject.GetComponent<BoxCollider>().enabled = false;
+        }
+        else if (_pickCollectableScript.PlayerFirstDigit == 0 && _pickCollectableScript.PlayerSecondDigit == 0 && _pickCollectableScript.PlayerThirdDigit == 0)
+        {
+            transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().enabled = false;
+            transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().enabled = false;
+            transform.GetChild(2).gameObject.GetComponent<MeshRenderer>().enabled = false;
+            transform.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = false;
+            transform.GetChild(1).gameObject.GetComponent<BoxCollider>().enabled = false;
+            transform.GetChild(2).gameObject.GetComponent<BoxCollider>().enabled = false;
+        }
+        else if (_pickCollectableScript.PlayerFirstDigit == 0 && _pickCollectableScript.PlayerSecondDigit == 0 && _pickCollectableScript.PlayerThirdDigit == 0)
         {
             transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().enabled = false;
             transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().enabled = false;

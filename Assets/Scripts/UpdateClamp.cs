@@ -19,15 +19,15 @@ public class UpdateClamp : MonoBehaviour
         }
         else if(_player.GetChild(2).GetComponent<MeshRenderer>().enabled)
         {
-            transform.localPosition = new Vector3(-3f, transform.localPosition.y, transform.localPosition.z);
+            transform.localPosition = new Vector3(-2f, transform.localPosition.y, transform.localPosition.z);
         }
         else if (_player.GetChild(3).GetComponent<MeshRenderer>().enabled)
         {
-            transform.localPosition = new Vector3(-3.5f, transform.localPosition.y, transform.localPosition.z);
+            transform.localPosition = new Vector3(-2.5f, transform.localPosition.y, transform.localPosition.z);
         }
         else if (_player.GetChild(4).GetComponent<MeshRenderer>().enabled)
         {
-            transform.localPosition = new Vector3(-4f, transform.localPosition.y, transform.localPosition.z);
+            transform.localPosition = new Vector3(-2f, transform.localPosition.y, transform.localPosition.z);
         }
     }
 }
