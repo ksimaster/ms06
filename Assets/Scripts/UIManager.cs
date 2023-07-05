@@ -58,6 +58,7 @@ public class UIManager : MonoBehaviour
             _player.transform.GetChild(i).GetComponent<Animator>().SetBool("isMove", true);
         }
     }
+    // сделать прогрессию роста цены 
     public void StartLevelCount()
     {
         if (_saveDatas.Money > 99)
@@ -78,7 +79,7 @@ public class UIManager : MonoBehaviour
             _totalMoneyText.text = _saveDatas.Money.ToString();
         }
     }
-
+    // заменить на имя сцены
     public void RestartGame()
     {
         SceneManager.LoadScene(_scene.buildIndex);

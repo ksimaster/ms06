@@ -5,6 +5,8 @@ public class CollectableManager : MonoBehaviour
     [SerializeField] private int _firstDigit;
     [SerializeField] private int _secondDigit;
     [SerializeField] private int _thirdDigit;
+    [SerializeField] private int _fourthDigit;
+    [SerializeField] private int _fifthDigit;
     [SerializeField] private string _state;
     public string State 
     {
@@ -26,6 +28,17 @@ public class CollectableManager : MonoBehaviour
         get { return _thirdDigit; }
         set { _thirdDigit = value; }
     }
+    public int FourthDigit
+    {
+        get { return _fourthDigit; }
+        set { _fourthDigit = value; }
+    }
+    public int FifthDigit
+    {
+        get { return _fifthDigit; }
+        set { _fifthDigit = value; }
+    }
+
     void Start()
     {
         CheckFirstDigitsZeroOrNot();
@@ -34,11 +47,26 @@ public class CollectableManager : MonoBehaviour
 
     public void CheckFirstDigitsZeroOrNot()
     {
-        if (_firstDigit == 0 && _secondDigit == 0)
+        if (_firstDigit == 0 && _secondDigit == 0 && _thirdDigit == 0 && _fourthDigit == 0)
         {
             gameObject.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().enabled = false;
             gameObject.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().enabled = false;
-            gameObject.transform.GetChild(4).transform.position = gameObject.transform.GetChild(1).transform.position;
+            gameObject.transform.GetChild(2).gameObject.GetComponent<MeshRenderer>().enabled = false;
+            gameObject.transform.GetChild(3).gameObject.GetComponent<MeshRenderer>().enabled = false;
+            gameObject.transform.GetChild(6).transform.position = gameObject.transform.GetChild(3).transform.position;
+        } 
+        else if (_firstDigit == 0 && _secondDigit == 0 && _thirdDigit == 0)
+        {
+            gameObject.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().enabled = false;
+            gameObject.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().enabled = false;
+            gameObject.transform.GetChild(2).gameObject.GetComponent<MeshRenderer>().enabled = false;
+            gameObject.transform.GetChild(6).transform.position = gameObject.transform.GetChild(2).transform.position;
+        }
+        else if (_firstDigit == 0 && _secondDigit == 0)
+        {
+            gameObject.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().enabled = false;
+            gameObject.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().enabled = false;
+            gameObject.transform.GetChild(6).transform.position = gameObject.transform.GetChild(1).transform.position;
         }
         else if (_firstDigit == 0)
         {
@@ -46,6 +74,7 @@ public class CollectableManager : MonoBehaviour
             gameObject.transform.GetChild(4).transform.position = gameObject.transform.GetChild(0).transform.position;
         }
     }
+    // выровнять центр собираемой чиселки
     void BoxColliderScaleCheck()
     {
         if (transform.GetChild(0).GetComponent<MeshRenderer>().enabled)

@@ -21,5 +21,13 @@ public class UpdateClamp : MonoBehaviour
         {
             transform.localPosition = new Vector3(-3f, transform.localPosition.y, transform.localPosition.z);
         }
+        else if (_player.GetChild(3).GetComponent<MeshRenderer>().enabled)
+        {
+            transform.localPosition = new Vector3(-3.5f, transform.localPosition.y, transform.localPosition.z);
+        }
+        else if (_player.GetChild(4).GetComponent<MeshRenderer>().enabled)
+        {
+            transform.localPosition = new Vector3(-4f, transform.localPosition.y, transform.localPosition.z);
+        }
     }
 }
