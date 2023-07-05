@@ -14,6 +14,8 @@ public class Bullet : MonoBehaviour
     [SerializeField] private int _valueFirstDigit;
     [SerializeField] private int _valueSecondDigit;
     [SerializeField] private int _valueThirdDigit;
+    [SerializeField] private int _valueFourthDigit;
+    [SerializeField] private int _valueFifthDigit;
     [SerializeField] private int _value;//bu gatelerdeki text iзin gerekliydi usttekiler ise model isteyen carpismalar icin
     [SerializeField] private CollectableManager _collectableManager;
     private int _surplus;
@@ -61,7 +63,23 @@ public class Bullet : MonoBehaviour
             _collectableManager = other.gameObject.GetComponent<CollectableManager>();
             if (_collectableManager.State=="Positive")
             {
-                _collectableManager.ThirdDigit += _valueThirdDigit;
+                _collectableManager.FifthDigit += _valueFifthDigit;
+                if (_collectableManager.FifthDigit >= 10)
+                {
+                    _collectableManager.FifthDigit = _collectableManager.FifthDigit % 10;
+                    _surplus = 1;
+                }
+
+                _collectableManager.FourthDigit = _collectableManager.FourthDigit + _valueFourthDigit + _surplus;
+                _surplus = 0;
+                if (_collectableManager.FourthDigit >= 10)
+                {
+                    _collectableManager.FourthDigit = _collectableManager.FourthDigit % 10;
+                    _surplus = 1;
+                }
+
+                _collectableManager.ThirdDigit = _collectableManager.ThirdDigit + _valueThirdDigit + _surplus;
+                _surplus = 0;
                 if (_collectableManager.ThirdDigit >= 10)
                 {
                     _collectableManager.ThirdDigit = _collectableManager.ThirdDigit % 10;
@@ -91,33 +109,57 @@ public class Bullet : MonoBehaviour
 
             if (_collectableManager.State == "Negative")
             {
-                if ((_collectableManager.ThirdDigit < _valueThirdDigit) && _collectableManager.SecondDigit == 0 && _collectableManager.FirstDigit==0)//eksiden 0 gormeyip direkt artэya gecis
+                if ((_collectableManager.FifthDigit < _valueFifthDigit) && _collectableManager.FourthDigit == 0 && _collectableManager.ThirdDigit == 0 && _collectableManager.SecondDigit == 0 && _collectableManager.FirstDigit==0)//eksiden 0 gormeyip direkt artэya gecis
                 {
                     _collectableManager.FirstDigit = 0;
                     _collectableManager.SecondDigit = 0;
-                    int newThirdDigit = _value - _collectableManager.ThirdDigit;
-                    _collectableManager.ThirdDigit = newThirdDigit;
+                    _collectableManager.ThirdDigit = 0;
+                    _collectableManager.FourthDigit = 0;
+                    int newFifthDigit = _value - _collectableManager.FifthDigit;
+                    _collectableManager.FifthDigit = newFifthDigit;
                     _goToEnd = true;
                     _collectableManager.State = "Positive";
-                    other.transform.GetChild(4).GetComponent<MeshFilter>().mesh = _plusMesh.GetComponent<MeshFilter>().sharedMesh;
+                    other.transform.GetChild(6).GetComponent<MeshFilter>().mesh = _plusMesh.GetComponent<MeshFilter>().sharedMesh;
                     for (int i = 0; i < other.transform.childCount; i++)
                     {
                         other.transform.GetChild(i).GetComponent<MeshRenderer>().sharedMaterial = _green;
                     }
                 }
-                else if (_collectableManager.ThirdDigit < _valueThirdDigit)
+                else if (_collectableManager.FifthDigit < _valueFifthDigit)
                 {
-                    _collectableManager.ThirdDigit = _collectableManager.ThirdDigit + 10 - _valueThirdDigit;
+                    _collectableManager.FifthDigit = _collectableManager.FifthDigit + 10 - _valueFifthDigit;
                     _surplus = -1;
                 }
                 else
                 {
-                    _collectableManager.ThirdDigit -= _valueThirdDigit;
+                    _collectableManager.FifthDigit -= _valueFifthDigit;
                     _surplus = 0;
                 }
-
+                /////////////////////////////////////////////////////////////////////////////////////
                 if (!_goToEnd)
                 {
+                    if (_collectableManager.FourthDigit + _surplus < _valueFourthDigit)
+                    {
+                        _collectableManager.FourthDigit = _collectableManager.FourthDigit + _surplus + 10 - _valueFourthDigit;
+                        _surplus = -1;
+                    }
+                    else
+                    {
+                        _collectableManager.FourthDigit = _collectableManager.FourthDigit + _surplus - _valueFourthDigit;
+                        _surplus = 0;
+                    }
+
+                    if (_collectableManager.ThirdDigit + _surplus < _valueThirdDigit)
+                    {
+                        _collectableManager.ThirdDigit = _collectableManager.ThirdDigit + _surplus + 10 - _valueThirdDigit;
+                        _surplus = -1;
+                    }
+                    else
+                    {
+                        _collectableManager.ThirdDigit = _collectableManager.ThirdDigit + _surplus - _valueThirdDigit;
+                        _surplus = 0;
+                    }
+
                     if (_collectableManager.SecondDigit + _surplus < _valueSecondDigit)
                     {
                         _collectableManager.SecondDigit = _collectableManager.SecondDigit + _surplus + 10 - _valueSecondDigit;
@@ -132,7 +174,7 @@ public class Bullet : MonoBehaviour
                     if (_collectableManager.FirstDigit + _surplus < _valueFirstDigit || (_collectableManager.FirstDigit == 0 && _collectableManager.SecondDigit == 0 && _collectableManager.ThirdDigit == 0))
                     {
                         _collectableManager.State = "Positive";
-                        other.transform.GetChild(4).GetComponent<MeshFilter>().mesh = _plusMesh.GetComponent<MeshFilter>().sharedMesh;
+                        other.transform.GetChild(6).GetComponent<MeshFilter>().mesh = _plusMesh.GetComponent<MeshFilter>().sharedMesh;
                         for (int i = 0; i < other.transform.childCount; i++)
                         {
                             other.transform.GetChild(i).GetComponent<MeshRenderer>().sharedMaterial = _green;
@@ -157,6 +199,8 @@ public class Bullet : MonoBehaviour
         other.transform.GetChild(0).GetComponent<MeshFilter>().mesh = _numberMeshes[_collectableManager.FirstDigit].GetComponent<MeshFilter>().sharedMesh;//bu 3 satir mesh degisimi icin
         other.transform.GetChild(1).GetComponent<MeshFilter>().mesh = _numberMeshes[_collectableManager.SecondDigit].GetComponent<MeshFilter>().sharedMesh;
         other.transform.GetChild(2).GetComponent<MeshFilter>().mesh = _numberMeshes[_collectableManager.ThirdDigit].GetComponent<MeshFilter>().sharedMesh;
+        other.transform.GetChild(3).GetComponent<MeshFilter>().mesh = _numberMeshes[_collectableManager.FourthDigit].GetComponent<MeshFilter>().sharedMesh;
+        other.transform.GetChild(4).GetComponent<MeshFilter>().mesh = _numberMeshes[_collectableManager.FifthDigit].GetComponent<MeshFilter>().sharedMesh;
     }
     void MeshRendererActiveOrDeactive(GameObject other)
     {
@@ -165,21 +209,45 @@ public class Bullet : MonoBehaviour
             other.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
             other.transform.GetChild(1).GetComponent<MeshRenderer>().enabled = true;
             other.transform.GetChild(2).GetComponent<MeshRenderer>().enabled = true;
-            other.transform.GetChild(4).transform.localPosition = new Vector3(-1.5f, 0f, 0f);
+            other.transform.GetChild(3).GetComponent<MeshRenderer>().enabled = true;
+            other.transform.GetChild(4).GetComponent<MeshRenderer>().enabled = true;
+            other.transform.GetChild(6).transform.localPosition = new Vector3(-3.5f, 0f, 0f); // настраивать
+        }
+        else if (_collectableManager.FirstDigit == 0 && _collectableManager.SecondDigit == 0 && _collectableManager.ThirdDigit == 0 && _collectableManager.FourthDigit == 0)
+        {
+            other.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+            other.transform.GetChild(1).GetComponent<MeshRenderer>().enabled = false;
+            other.transform.GetChild(2).GetComponent<MeshRenderer>().enabled = false;
+            other.transform.GetChild(3).GetComponent<MeshRenderer>().enabled = false;
+            other.transform.GetChild(4).GetComponent<MeshRenderer>().enabled = true;
+            other.transform.GetChild(6).transform.localPosition = new Vector3(-.5f, 0f, 0f); // настраивать
+        }
+        else if (_collectableManager.FirstDigit == 0 && _collectableManager.SecondDigit == 0 && _collectableManager.ThirdDigit == 0)
+        {
+            other.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+            other.transform.GetChild(1).GetComponent<MeshRenderer>().enabled = false;
+            other.transform.GetChild(2).GetComponent<MeshRenderer>().enabled = false;
+            other.transform.GetChild(3).GetComponent<MeshRenderer>().enabled = true;
+            other.transform.GetChild(4).GetComponent<MeshRenderer>().enabled = true;
+            other.transform.GetChild(4).transform.localPosition = new Vector3(-.5f, 0f, 0f); // настраивать
         }
         else if (_collectableManager.FirstDigit == 0 && _collectableManager.SecondDigit == 0)
         {
             other.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
             other.transform.GetChild(1).GetComponent<MeshRenderer>().enabled = false;
             other.transform.GetChild(2).GetComponent<MeshRenderer>().enabled = true;
-            other.transform.GetChild(4).transform.localPosition = new Vector3(-.5f, 0f, 0f);
+            other.transform.GetChild(3).GetComponent<MeshRenderer>().enabled = true;
+            other.transform.GetChild(4).GetComponent<MeshRenderer>().enabled = true;
+            other.transform.GetChild(4).transform.localPosition = new Vector3(-.5f, 0f, 0f); // настраивать
         }
         else if (_collectableManager.FirstDigit == 0)
         {
             other.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
             other.transform.GetChild(1).GetComponent<MeshRenderer>().enabled = true;
             other.transform.GetChild(2).GetComponent<MeshRenderer>().enabled = true;
-            other.transform.GetChild(4).transform.localPosition = new Vector3(-.85f,0f,0f);
+            other.transform.GetChild(3).GetComponent<MeshRenderer>().enabled = true;
+            other.transform.GetChild(4).GetComponent<MeshRenderer>().enabled = true;
+            other.transform.GetChild(4).transform.localPosition = new Vector3(-.85f,0f,0f); // настраивать
         }
     }
 
