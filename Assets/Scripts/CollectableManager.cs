@@ -80,10 +80,22 @@ public class CollectableManager : MonoBehaviour
         if (transform.GetChild(0).GetComponent<MeshRenderer>().enabled)
         {
             BoxCollider boxCol = transform.GetComponent<BoxCollider>();
-            boxCol.center = new Vector3(-0.473673f, boxCol.center.y, boxCol.center.z);
-            boxCol.size = new Vector3(2.270566f, boxCol.size.y, boxCol.size.z);
+            boxCol.center = new Vector3(-0.9653735f, boxCol.center.y, boxCol.center.z);
+            boxCol.size = new Vector3(3.253966f, boxCol.size.y, boxCol.size.z);
         }
         else if (transform.GetChild(1).GetComponent<MeshRenderer>().enabled)
+        {
+            BoxCollider boxCol = transform.GetComponent<BoxCollider>();
+            boxCol.center = new Vector3(-0.9558893f, boxCol.center.y, boxCol.center.z);
+            boxCol.size = new Vector3(3.235001f, boxCol.size.y, boxCol.size.z);
+        }
+        else if (transform.GetChild(2).GetComponent<MeshRenderer>().enabled)
+        {
+            BoxCollider boxCol = transform.GetComponent<BoxCollider>();
+            boxCol.center = new Vector3(-0.2005937f, boxCol.center.y, boxCol.center.z);
+            boxCol.size = new Vector3(1.724408f, boxCol.size.y, boxCol.size.z);
+        }
+        else if (transform.GetChild(3).GetComponent<MeshRenderer>().enabled)
         {
             BoxCollider boxCol = transform.GetComponent<BoxCollider>();
             boxCol.center = new Vector3(-0.2005937f, boxCol.center.y, boxCol.center.z);
