@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
+    private const int LvlupPrice = 100;
     [SerializeField] private SaveDatas _saveDatas;
     [SerializeField] private PlayerController _playerCont;
     [SerializeField] private GameObject _startPanel;
@@ -35,7 +36,7 @@ public class UIManager : MonoBehaviour
     }*/
     private void Start()
     {
-        _saveDatas.Money += _saveDatas.EarnedMoney;
+        _saveDatas.Money += _saveDatas.EarnedMoney + 1000;
         _totalMoneyText.text = _saveDatas.Money.ToString();
         _saveDatas.EarnedMoney = 0;
         _startCountLv.text = "Lv." + _saveDatas.StartCount.ToString();
@@ -60,21 +61,21 @@ public class UIManager : MonoBehaviour
     }
     public void StartLevelCount()
     {
-        if (_saveDatas.Money > 99)
+        if (_saveDatas.Money >= LvlupPrice && _saveDatas.StartCount < 9)
         {
             _saveDatas.StartCount++;
             _startCountLv.text = "Lv." + _saveDatas.StartCount.ToString();
-            _saveDatas.Money -= 1000;
+            _saveDatas.Money -= LvlupPrice;
             _totalMoneyText.text = _saveDatas.Money.ToString();
         }
     }
     public void BulletLevelCount()
     {
-        if (_saveDatas.Money > 99)
+        if (_saveDatas.Money >= LvlupPrice && _saveDatas.BulletCount < 9)
         {
             _saveDatas.BulletCount++;
             _bulletCountLv.text = "Lv." + _saveDatas.BulletCount.ToString();
-            _saveDatas.Money -= 1000;
+            _saveDatas.Money -= LvlupPrice;
             _totalMoneyText.text = _saveDatas.Money.ToString();
         }
     }

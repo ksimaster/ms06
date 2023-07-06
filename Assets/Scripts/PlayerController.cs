@@ -83,6 +83,10 @@ public class PlayerController : MonoBehaviour
             {
                 _fireRate += (_fireRate - other.transform.GetChild(0).GetComponent<GateManager>().Number) / 200f;  
             }
+            if (_fireRate < 0.085)
+            {
+                _fireRate = 0.085f;
+            }
         }
         else if (other.CompareTag("Gate") && other.transform.GetChild(0).GetComponent<GateManager>().TypePowerup == "Range")
         {
@@ -90,6 +94,9 @@ public class PlayerController : MonoBehaviour
             if (_range<3)
             {
                 _range += (_range + other.transform.GetChild(0).GetComponent<GateManager>().Number) / 50f;
+            }
+            if (_range > 3) {
+                _range = 3f;
             }
         }
         else if (other.CompareTag("Bonus"))
