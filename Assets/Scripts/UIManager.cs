@@ -37,6 +37,8 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         _saveDatas.Money += _saveDatas.EarnedMoney + 1000;
+        _saveDatas.StartCount = 0;
+        _saveDatas.BulletCount = 1;
         _totalMoneyText.text = _saveDatas.Money.ToString();
         _saveDatas.EarnedMoney = 0;
         _startCountLv.text = "Lv." + _saveDatas.StartCount.ToString();

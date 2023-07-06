@@ -96,12 +96,11 @@ public class PickCollectable : MonoBehaviour
 
                 MeshRendererActiveOrDeactive();
             }
-            else if(other.GetComponent<CollectableManager>().State == "Negative" && _playerThousDigit == 0)
-                // Негативные теперь работают только когда меньше тысячи
+            else if(other.GetComponent<CollectableManager>().State == "Negative")
             {
                 if (_playerThirdDigit < other.GetComponent<CollectableManager>().ThirdDigit)
                 {
-                    _playerThirdDigit = _playerThirdDigit + 10 - other.GetComponent<CollectableManager>().ThirdDigit;
+                    _playerThirdDigit += 10 - other.GetComponent<CollectableManager>().ThirdDigit;
                     _surplus = -1;
                 }
                 else
@@ -112,25 +111,33 @@ public class PickCollectable : MonoBehaviour
 
                 if (_playerSecondDigit + _surplus < other.GetComponent<CollectableManager>().SecondDigit)
                 {
-                    _playerSecondDigit = _playerSecondDigit +_surplus + 10 - other.GetComponent<CollectableManager>().SecondDigit;
+                    _playerSecondDigit += _surplus + 10 - other.GetComponent<CollectableManager>().SecondDigit;
                     _surplus = -1;
                 }
                 else
                 {
-                    _playerSecondDigit = PlayerSecondDigit + _surplus - other.GetComponent<CollectableManager>().SecondDigit;
+                    _playerSecondDigit += _surplus - other.GetComponent<CollectableManager>().SecondDigit;
                     _surplus = 0;
                 }
 
                 if (_playerFirstDigit + _surplus < other.GetComponent<CollectableManager>().FirstDigit)
                 {
-                    _gameOverCamera.Priority = 15;
-                    _gameOverParticle.SetActive(true);
-                    _playerCont._isFinish = true;
-                    transform.DORotate(new Vector3(-90f, 0f, 0f), 1f);
-                    transform.DOMove(transform.position - new Vector3(0f, .17f, 0f), 1f).OnComplete(() => { _uiManager._gameOverPanel.SetActive(true); }); ;
-                    _playerFirstDigit = first;
-                    _playerSecondDigit = second;
-                    _playerThirdDigit = third;     
+                    if (_playerThousDigit > 0)
+                    {
+                        _playerFirstDigit += _surplus + 10 - other.GetComponent<CollectableManager>().FirstDigit;
+                        _playerThousDigit--;
+                    }
+                    else
+                    {
+                        _gameOverCamera.Priority = 15;
+                        _gameOverParticle.SetActive(true);
+                        _playerCont._isFinish = true;
+                        transform.DORotate(new Vector3(-90f, 0f, 0f), 1f);
+                        transform.DOMove(transform.position - new Vector3(0f, .17f, 0f), 1f).OnComplete(() => { _uiManager._gameOverPanel.SetActive(true); }); ;
+                        _playerFirstDigit = first;
+                        _playerSecondDigit = second;
+                        _playerThirdDigit = third;
+                    }
                 }
                 else
                 {
