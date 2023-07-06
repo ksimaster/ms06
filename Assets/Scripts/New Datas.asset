@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 685fe3a8f4d3fde4aae99a95b28acbb1, type: 3}
   m_Name: New Datas
   m_EditorClassIdentifier: 
-  _money: 250
+  _money: 1400
   _earnedMoney: 0
   _startCount: 0
-  _bulletCount: 1
+  _bulletCount: 0

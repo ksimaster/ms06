@@ -64,7 +64,7 @@ public class UIManager : MonoBehaviour
         {
             _saveDatas.StartCount++;
             _startCountLv.text = "Lv." + _saveDatas.StartCount.ToString();
-            _saveDatas.Money -= 100;
+            _saveDatas.Money -= 1000;
             _totalMoneyText.text = _saveDatas.Money.ToString();
         }
     }
@@ -74,7 +74,7 @@ public class UIManager : MonoBehaviour
         {
             _saveDatas.BulletCount++;
             _bulletCountLv.text = "Lv." + _saveDatas.BulletCount.ToString();
-            _saveDatas.Money -= 100;
+            _saveDatas.Money -= 1000;
             _totalMoneyText.text = _saveDatas.Money.ToString();
         }
     }
