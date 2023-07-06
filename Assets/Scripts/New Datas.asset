@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _money: 1400
   _earnedMoney: 0
-  _startCount: 0
-  _bulletCount: 0
+  _startCount: 1
+  _bulletCount: 1
