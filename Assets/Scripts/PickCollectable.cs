@@ -240,9 +240,6 @@ public class PickCollectable : MonoBehaviour
         CancelInvoke(nameof(AutomaticDecrease));
     }
 
-    private void Update()
-    {
-        if (transform.GetChild(0).GetComponent<MeshRenderer>().enabled) transform.GetChild(0).position = new Vector3(-1.5f, 0, 0) ;
-    }
-    
+
+
 }
