@@ -84,11 +84,23 @@ public class UIManager : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene(_scene.buildIndex);
+        //SceneManager.LoadScene(_scene.buildIndex);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void NextLevel()
     {
-        SceneManager.LoadScene(_scene.buildIndex + 1);
+        //var nameCurrentScene = SceneManager.GetActiveScene().name;
+        // var numberScene = int.Parse(SceneManager.GetActiveScene().name) + 1;
+        // 15 заменить на большее число при увеличении сцен
+        if (int.Parse(SceneManager.GetActiveScene().name) == 15)
+        {
+            SceneManager.LoadScene("1");
+        }
+        else
+        {
+            SceneManager.LoadScene((int.Parse(SceneManager.GetActiveScene().name) + 1).ToString());
+        }
+        
     }
 }
