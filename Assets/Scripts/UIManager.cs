@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     private const int LvlupPrice = 100;
@@ -15,10 +16,18 @@ public class UIManager : MonoBehaviour
     public GameObject _finishPanel;
     public GameObject _gameOverPanel;
     public TextMeshProUGUI _earnedMoneyText;
-   // private static int _startCount = 0;
-   // private static int _bulletCount = 1;
+
+    public Button startCount;
+    public Button bulletCount;
+    public Button rewardStartCount;
+    public Button rewardBulletCount;
+
+    // private static int _startCount = 0;
+    // private static int _bulletCount = 1;
     private bool _isStart;
     private Scene _scene;
+    private int countReward = 0;
+    private int maxCountReward = 4;
     public bool IsStart
     {
         get { return _isStart; }
@@ -36,6 +45,8 @@ public class UIManager : MonoBehaviour
     }*/
     private void Start()
     {
+        if (!PlayerPrefs.HasKey("Level")) PlayerPrefs.SetInt("Lewel", 1);
+      //  if(int.Parse(SceneManager.GetActiveScene().name) != PlayerPrefs.GetInt("Lewel")) SceneManager.LoadScene(PlayerPrefs.GetInt("Lewel").ToString());
         _saveDatas.Money += _saveDatas.EarnedMoney + 1000;
         _saveDatas.StartCount = 0;
         _saveDatas.BulletCount = 1;
@@ -44,6 +55,22 @@ public class UIManager : MonoBehaviour
         _startCountLv.text = "Lv." + _saveDatas.StartCount.ToString();
         _bulletCountLv.text = "Lv." + _saveDatas.BulletCount.ToString();
         _scene = SceneManager.GetActiveScene();
+    }
+    private void Update()
+    {
+        if (countReward >= maxCountReward) rewardStartCount.gameObject.SetActive(false);
+        if (countReward >= maxCountReward) rewardBulletCount.gameObject.SetActive(false);
+        
+        if (_saveDatas.StartCount >= 9)
+        {
+            startCount.interactable = false;
+            rewardStartCount.gameObject.SetActive(false);
+        }
+        if (_saveDatas.BulletCount >= 9)
+        {
+            bulletCount.interactable = false;
+            rewardBulletCount.gameObject.SetActive(false);
+        }
     }
     public void StartGame()
     {
@@ -81,6 +108,27 @@ public class UIManager : MonoBehaviour
             _totalMoneyText.text = _saveDatas.Money.ToString();
         }
     }
+    public void RewardStartLevelCount()
+    {
+        if (_saveDatas.StartCount < 9 )
+        {
+            _saveDatas.StartCount++;
+            _startCountLv.text = "Lv." + _saveDatas.StartCount.ToString();
+            countReward += 1;
+        }
+        ShowAdReward();
+    }
+    public void RewardBulletLevelCount()
+    {
+        if (_saveDatas.BulletCount < 9)
+        {
+            _saveDatas.BulletCount++;
+            _bulletCountLv.text = "Lv." + _saveDatas.BulletCount.ToString();
+            countReward += 1;
+        }
+        ShowAdReward();
+    }
+
 
     public void RestartGame()
     {
@@ -92,15 +140,27 @@ public class UIManager : MonoBehaviour
     {
         //var nameCurrentScene = SceneManager.GetActiveScene().name;
         // var numberScene = int.Parse(SceneManager.GetActiveScene().name) + 1;
-        // 15 заменить на большее число при увеличении сцен
+        // 15 заменить на большее число при увеличении сценг
         if (int.Parse(SceneManager.GetActiveScene().name) == 15)
         {
+            PlayerPrefs.SetInt("Level", 1);
             SceneManager.LoadScene("1");
         }
         else
         {
+            PlayerPrefs.SetInt("Level", int.Parse(SceneManager.GetActiveScene().name) + 1);
             SceneManager.LoadScene((int.Parse(SceneManager.GetActiveScene().name) + 1).ToString());
         }
         
     }
+
+    public void ShowAdReward()
+    {
+#if UNITY_WEBGL && !UNITY_EDITOR
+    	WebGLPluginJS.RewardFunction();
+#endif
+
+    }
+
+
 }
