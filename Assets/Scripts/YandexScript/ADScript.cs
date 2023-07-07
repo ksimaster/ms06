@@ -9,6 +9,8 @@ public class ADScript : MonoBehaviour
     private const float CheckTimer = 150f;
     private const float TimeOffset = 5f;
 
+   
+
     //public string nameScene;
     private string lastIsAdsOpen = null;
    // private float timer;
@@ -135,7 +137,7 @@ public class ADScript : MonoBehaviour
             PlayerPrefs.SetInt("AdsOpen", 0);
            // AudioListener.pause = false;
             if (lastIsAdsOpen == "yes") {
-                AdsClosed();
+               // AdsClosed();
                 lastIsAdsOpen = "no";
             }
         }

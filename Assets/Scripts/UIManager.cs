@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _bulletCountLv;
     [SerializeField] private TextMeshProUGUI _totalMoneyText;
     public GameObject _finishPanel;
+    //public TextMeshProUGUI finishMoney;
     public GameObject _gameOverPanel;
     public TextMeshProUGUI _earnedMoneyText;
 
@@ -58,6 +59,7 @@ public class UIManager : MonoBehaviour
     }
     private void Update()
     {
+        CheckAds();
         if (countReward >= maxCountReward) rewardStartCount.gameObject.SetActive(false);
         if (countReward >= maxCountReward) rewardBulletCount.gameObject.SetActive(false);
         
@@ -154,6 +156,15 @@ public class UIManager : MonoBehaviour
         
     }
 
+    public void DoubleFinishMoney()
+    {
+        var skipLast = _earnedMoneyText.text.TrimEnd('$');
+        var countSkipLast = int.Parse(skipLast);
+        _earnedMoneyText.text = (countSkipLast * 2).ToString() + "$";
+        _saveDatas.EarnedMoney += countSkipLast;
+        ShowAdReward();
+    }
+
     public void ShowAdReward()
     {
 #if UNITY_WEBGL && !UNITY_EDITOR
@@ -162,5 +173,30 @@ public class UIManager : MonoBehaviour
 
     }
 
+    public void CheckAds()
+    {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        var adsOpen = WebGLPluginJS.GetAdsOpen();
+        if (lastIsAdsOpen == null) {
+            lastIsAdsOpen = adsOpen;
+        }
 
+        if (adsOpen == "yes")
+        {
+            PlayerPrefs.SetInt("AdsOpen", 1);
+            AudioListener.pause = true;
+            lastIsAdsOpen = "yes";
+        }
+        else
+        {
+            //Коничлась реклама
+            PlayerPrefs.SetInt("AdsOpen", 0);
+           // if (PlayerPrefs.GetInt("Sound") == 1) AudioListener.pause = false;
+            if (lastIsAdsOpen == "yes") {
+               // AdsClosed();
+                lastIsAdsOpen = "no";
+            }
+        }
+#endif
+    }
 }
