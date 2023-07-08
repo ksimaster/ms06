@@ -777,7 +777,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 62.08069, y: 720.16455}
+  m_AnchoredPosition: {x: 155, y: -121.93}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.49999994, y: 0.5}
 --- !u!114 &34232099
@@ -4083,7 +4083,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 860.1224, y: 128.16666}
+  m_AnchoredPosition: {x: 235, y: 320}
   m_SizeDelta: {x: 199, y: 28}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &223626733
@@ -4130,7 +4130,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 878992345374496459}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: BulletLevelCount
         m_Mode: 1
@@ -12546,7 +12546,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1482133512}
         m_TargetAssemblyTypeName: PROSoundManager, Assembly-CSharp
         m_MethodName: SoundOnOff
         m_Mode: 3
@@ -14770,7 +14770,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 689.7008, y: 128.16666}
+  m_AnchoredPosition: {x: -190.5, y: 320}
   m_SizeDelta: {x: 199, y: 28}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &739067898
@@ -14817,7 +14817,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 878992345374496459}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: StartLevelCount
         m_Mode: 1
@@ -15091,7 +15091,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 878992345374496459}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: RewardBulletLevelCount
         m_Mode: 1
@@ -20852,7 +20852,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 878992345374496459}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: RewardStartLevelCount
         m_Mode: 1
@@ -29726,7 +29726,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1482133512}
         m_TargetAssemblyTypeName: PROSoundManager, Assembly-CSharp
         m_MethodName: SoundOnOff
         m_Mode: 3
@@ -39326,16 +39326,16 @@ MonoBehaviour:
   _startPanel: {fileID: 878992345374496463}
   _inputPanel: {fileID: 878992345219022595}
   _player: {fileID: 6679042846181132196}
-  _startCountLv: {fileID: 0}
-  _bulletCountLv: {fileID: 0}
+  _startCountLv: {fileID: 1920108843}
+  _bulletCountLv: {fileID: 959169899}
   _totalMoneyText: {fileID: 1930235232}
   _finishPanel: {fileID: 28893752}
   _gameOverPanel: {fileID: 1214727156}
   _earnedMoneyText: {fileID: 948787828}
-  startCount: {fileID: 0}
-  bulletCount: {fileID: 0}
-  rewardStartCount: {fileID: 0}
-  rewardBulletCount: {fileID: 0}
+  startCount: {fileID: 739067898}
+  bulletCount: {fileID: 223626733}
+  rewardStartCount: {fileID: 1071780091}
+  rewardBulletCount: {fileID: 741546858}
 --- !u!222 &878992345374496460
 CanvasRenderer:
   m_ObjectHideFlags: 0
