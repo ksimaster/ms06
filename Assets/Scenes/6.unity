@@ -25299,8 +25299,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1f60aecf9515214d8cc6adf1e672948, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundOn: {fileID: 0}
-  soundOff: {fileID: 0}
+  soundOn: {fileID: 808122161}
+  soundOff: {fileID: 945927473}
 --- !u!82 &1365414643
 AudioSource:
   m_ObjectHideFlags: 0
@@ -33338,7 +33338,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 878992345374496459}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: DoubleFinishMoney
         m_Mode: 1
