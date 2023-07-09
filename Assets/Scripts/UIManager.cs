@@ -26,10 +26,11 @@ public class UIManager : MonoBehaviour
 
     // private static int _startCount = 0;
     // private static int _bulletCount = 1;
-    private bool _isStart;
+    private bool _isStart = false;
     private Scene _scene;
     private int countReward = 0;
     private int maxCountReward = 4;
+    private int numberScene;
     public bool IsStart
     {
         get { return _isStart; }
@@ -47,9 +48,10 @@ public class UIManager : MonoBehaviour
     }*/
     private void Start()
     {
-        if (!PlayerPrefs.HasKey("Level")) PlayerPrefs.SetInt("Lewel", 1);
-      //  if(int.Parse(SceneManager.GetActiveScene().name) != PlayerPrefs.GetInt("Lewel")) SceneManager.LoadScene(PlayerPrefs.GetInt("Lewel").ToString());
-        _saveDatas.Money += _saveDatas.EarnedMoney + 1000;
+        if (!PlayerPrefs.HasKey("Level")) PlayerPrefs.SetInt("Level", 15);
+        numberScene = int.Parse(SceneManager.GetActiveScene().name);
+        if (numberScene != PlayerPrefs.GetInt("Level")) SceneManager.LoadScene(PlayerPrefs.GetInt("Level").ToString());
+        _saveDatas.Money += _saveDatas.EarnedMoney;
         _saveDatas.StartCount = 0;
         _saveDatas.BulletCount = 1;
         _totalMoneyText.text = _saveDatas.Money.ToString();
@@ -81,7 +83,7 @@ public class UIManager : MonoBehaviour
         _player.GetComponent<PlayerController>().enabled = true;
         _player.GetComponent<PickCollectable>().enabled = true;
         _inputPanel.SetActive(true);
-        for (int i = 0; i < _startPanel.transform.childCount; i++)
+        for (int i = 0; i < _startPanel.transform.childCount-1; i++)
         {
             _startPanel.transform.GetChild(i).gameObject.SetActive(false);
         }
