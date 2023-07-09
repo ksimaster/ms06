@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     private const int LvlupPrice = 100;
+    private string lastIsAdsOpen = null;
     [SerializeField] private SaveDatas _saveDatas;
     [SerializeField] private PlayerController _playerCont;
     [SerializeField] private GameObject _startPanel;
