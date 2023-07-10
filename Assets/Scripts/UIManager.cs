@@ -48,7 +48,7 @@ public class UIManager : MonoBehaviour
     }*/
     private void Start()
     {
-        if (!PlayerPrefs.HasKey("Level")) PlayerPrefs.SetInt("Level", 15);
+        if (!PlayerPrefs.HasKey("Level")) PlayerPrefs.SetInt("Level", 1);
         numberScene = int.Parse(SceneManager.GetActiveScene().name);
         if (numberScene != PlayerPrefs.GetInt("Level")) SceneManager.LoadScene(PlayerPrefs.GetInt("Level").ToString());
         _saveDatas.Money += _saveDatas.EarnedMoney;
@@ -83,7 +83,7 @@ public class UIManager : MonoBehaviour
         _player.GetComponent<PlayerController>().enabled = true;
         _player.GetComponent<PickCollectable>().enabled = true;
         _inputPanel.SetActive(true);
-        for (int i = 0; i < _startPanel.transform.childCount-1; i++)
+        for (int i = 0; i < _startPanel.transform.childCount; i++)
         {
             _startPanel.transform.GetChild(i).gameObject.SetActive(false);
         }

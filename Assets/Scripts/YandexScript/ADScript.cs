@@ -59,7 +59,7 @@ public class ADScript : MonoBehaviour
         //var deltaTime = Time.deltaTime;
        // timer += deltaTime;
 
-        CheckAds();
+       // CheckAds();
         /*
         if (timer + TimeOffset > CheckTimer)
         {
