@@ -29579,7 +29579,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: 
 --- !u!222 &1632245530
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -36341,7 +36341,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: 
 --- !u!222 &2011592812
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -37968,7 +37968,7 @@ GameObject:
   - component: {fileID: 878992345374496459}
   m_Layer: 5
   m_Name: StartPanel
-  m_TagString: EditorOnly
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
