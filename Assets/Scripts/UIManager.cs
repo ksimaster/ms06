@@ -36,16 +36,21 @@ public class UIManager : MonoBehaviour
         get { return _isStart; }
         set { _isStart = value; }
     }
-   /* public int StartCount 
+    /* public int StartCount 
+     {
+         get {return _startCount; }
+         set { _startCount = value; }
+     }
+     public int BulletCount
+     {
+         get { return _bulletCount; }
+         set { _bulletCount = value; }
+     }*/
+
+    private void Awake()
     {
-        get {return _startCount; }
-        set { _startCount = value; }
+        if (!PlayerPrefs.HasKey("Money")) PlayerPrefs.SetInt("Money", 200);
     }
-    public int BulletCount
-    {
-        get { return _bulletCount; }
-        set { _bulletCount = value; }
-    }*/
     private void Start()
     {
         if (!PlayerPrefs.HasKey("Level")) PlayerPrefs.SetInt("Level", 1);

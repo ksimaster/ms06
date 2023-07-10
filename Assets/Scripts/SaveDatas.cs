@@ -12,8 +12,16 @@ public class SaveDatas : ScriptableObject
     [SerializeField] private int _bulletCount = 1;
     public int Money
     {
-        get { return _money; }
-        set { _money = value; }
+        get 
+        {
+            _money = PlayerPrefs.GetInt("Money");
+            return _money;
+        }
+        set 
+        {
+            PlayerPrefs.SetInt("Money", value);
+            _money = value; 
+        }
     }
     public int EarnedMoney
     {
